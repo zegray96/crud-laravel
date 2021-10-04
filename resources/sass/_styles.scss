@@ -1,0 +1,25 @@
+.menuCard {
+    min-height: 120px;
+    .icon {
+        font-size: 40px;
+    }
+}
+
+.aItemMenu {
+    text-decoration: none;
+    &:hover{
+        text-decoration: none;
+    }
+}
+
+.userData {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.header {
+    background-color: rgb(61, 61, 255);
+    border-radius: 20px;
+    padding:20px;
+}
