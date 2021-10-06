@@ -5,3 +5,4 @@
 {{-- Font --}}
 <link rel="stylesheet" href="{{asset('css/font.css')}}">
 
+@yield('more-links')

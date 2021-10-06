@@ -19,3 +19,4 @@ Route::get('/', function () {
 
 
 Route::resource('/articles', 'ArticleController');
+Route::get('/articles-list','ArticleController@list')->name('articles.list');

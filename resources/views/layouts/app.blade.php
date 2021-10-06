@@ -11,6 +11,7 @@
     <title>{{ env('APP_NAME') }} @yield('pageTitle')</title>
 
     @include('layouts.links')
+
 </head>
 
 <body>
