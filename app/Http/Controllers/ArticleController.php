@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -36,7 +37,27 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $validatedData = $request->validate([
+        //     'correlative_module_id' => 'required',
+        // ], [
+        //     'correlative_module_id.required' => 'Seleccione una materia correlativa',
+        // ]);
+        try {
+            DB::beginTransaction();
+            Article::create([
+                'description'=>$request->description,
+                'price'=>$request->price,
+                'status'=>$request->status,
+            ]);
+            DB::commit();
+            return response()->json([
+                'title'=>'¡Guardado!',
+                'msg' => 'El registro se guardó correctamente',
+                'icon' => 'success'
+            ], 200);
+        } catch (Exception $e) {
+            DB::rolback();
+        }
     }
 
     /**

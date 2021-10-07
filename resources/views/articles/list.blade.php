@@ -1,10 +1,9 @@
-<table class="table" id="myTable">
+<table class="table" id="myTable" style="width: 100%;">
     <thead>
         <tr>
             <th>Acción</th>
             <th>Descripcion</th>
             <th>Precio</th>
-            <th>Stock</th>
             <th>Status</th>
         </tr>
     </thead>
@@ -17,7 +16,6 @@
                 </th>
                 <td>{{$article->description}}</td>
                 <td>{{$article->price}}</td>
-                <td>{{$article->stock}}</td>
                 <td>{{$article->status}}</td>
             </tr>
         @endforeach
