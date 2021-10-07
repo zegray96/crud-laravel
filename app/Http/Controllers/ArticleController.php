@@ -100,8 +100,23 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy($id)
     {
-        //
+        $article = Article::find($id);
+        $article->delete();
+        return response()->json([
+            'title'=>'¡Cambios guardados!',
+            'msg'=>'El registro se eliminó correctamente',
+            'icon'=>'info'
+        ]);
+    }
+
+    public function list()
+    {
+        $articles = Article::get();
+        return datatables()->of($articles)
+        ->addColumn('buttons', 'articles.actionButtons')
+        ->rawColumns(['buttons'])
+        ->toJson();
     }
 }

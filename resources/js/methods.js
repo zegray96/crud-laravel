@@ -1,9 +1,10 @@
-function store(form) {
+function store(form, tableId) {
     // form = formulario que envia los datos
     axios(form.attr('action'), {
         method: form.attr('method'),
         data: form.serialize()
     }).then(res => {
+        refreshDataTable(tableId);
         showMsg(res.data.title, res.data.msg, res.data.icon, true)
         $('#modalForm').modal('hide');
     }).catch(err => {
@@ -33,16 +34,48 @@ function showMsg(title, msg, icon, reload) {
         text: msg,
         icon: icon,
         showCancelButton: false,
-    }).then(() => {
-        if (reload) {
-            // location.reload();
-            console.log('deberia recargar');
+    })
+}
+
+function confirmMsg(title, msg, icon) {
+    return Swal.fire({
+        title: title,
+        text: msg,
+        icon: icon,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.value) {
+            return true;
+        } else {
+            return false;
         }
     });
+}
+
+function destroy(href, tableId) {
+    confirmMsg("¿Estás seguro/a?", "Se eliminará el registro", 'warning')
+        .then(res => {
+            if (res) {
+                axios.delete(href)
+                    .then(res => {
+                        refreshDataTable(tableId);
+                        showMsg(res.data.title, res.data.msg, res.data.icon, false);
+                    });
+            }
+        })
+}
+
+
+function refreshDataTable(tableId) {
+    tableId.DataTable().ajax.reload();
 }
 
 
 
 
-export { store, showMsg };
+export { store, destroy, showMsg, confirmMsg, refreshDataTable };
 

@@ -31,7 +31,7 @@
 
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="sumbit" class="btn btn-primary" onclick="event.preventDefault(); store($('#formArticle'));">Guardar</button>
+            <button type="sumbit" class="btn btn-primary" onclick="event.preventDefault(); store($('#formArticle'), $('#myTable'));">Guardar</button>
         </div>
 
     </form>
