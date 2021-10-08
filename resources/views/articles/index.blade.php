@@ -50,7 +50,15 @@
                     "infoPostFix": "",
                     "infoFiltered": "(filtrado de un total de _MAX_ registros)",
                     "loadingRecords": "Cargando...",
-                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "lengthMenu": "Mostrar " +
+                        `<select class="custom-select custom-select-sm form-control form-control-sm">
+                            <option value='10'>10</option>
+                            <option value='25'>25</option>
+                            <option value='50'>50</option>
+                            <option value='100'>100</option>
+                            <option value='-1'>Todos</option>
+                        </select>` +
+                        " registros por página",
                     "paginate": {
                         "first": "Primero",
                         "last": "Último",
