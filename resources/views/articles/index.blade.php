@@ -14,8 +14,14 @@
 
     <div class="row mb-4">
         <div class="col-12">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#modalForm">Nuevo</button>
-            @include('articles.form')
+            <a href="{{ route('articles.create') }}" class="btn btn-primary"
+                onclick="event.preventDefault(); create(this.href)"> Nuevo
+                <i class="fa fa-plus"></i>
+            </a>
+
+            {{-- Modal Form --}}
+            @include('layouts.modalForm')
+            {{-- End Modal --}}
         </div>
     </div>
 

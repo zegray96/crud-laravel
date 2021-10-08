@@ -70,6 +70,20 @@ function destroy(href, tableId) {
 }
 
 
+function create(url) {
+    axios.get(url)
+        .then(res => {
+            $('#modalFormContent').html(res.data);
+            // evitamos que al hacer click se cierre el modal
+            $('#modalForm').modal({
+                backdrop: 'static',
+                keyboard: false
+            }, 'show');
+        }).catch(err => console.log)
+}
+
+
+
 function refreshDataTable(tableId) {
     tableId.DataTable().ajax.reload();
 }
@@ -77,5 +91,5 @@ function refreshDataTable(tableId) {
 
 
 
-export { store, destroy, showMsg, confirmMsg, refreshDataTable };
+export { store, destroy, create, showMsg, confirmMsg, refreshDataTable };
 
