@@ -37,11 +37,14 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        // $validatedData = $request->validate([
-        //     'correlative_module_id' => 'required',
-        // ], [
-        //     'correlative_module_id.required' => 'Seleccione una materia correlativa',
-        // ]);
+        $validatedData = $request->validate([
+            'description' => 'required',
+            'price' => 'required|numeric',
+        ], [
+            'description.required' => 'Ingrese una descripcion',
+            'price.required' => 'Ingrese un precio',
+            'price.numeric' => 'Debe ser un numero',
+        ]);
         try {
             DB::beginTransaction();
             Article::create([

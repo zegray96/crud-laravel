@@ -27,12 +27,18 @@
     {{-- Datatables --}}
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-    
+
     {{-- Script View --}}
     <script>
         function init() {
             loadTable();
         }
+
+        // Al cerrar modal
+        $('#modalForm').on('hidden.bs.modal', function() {
+            // eliminamos los msj de errores
+            $(".help-block").remove();
+        });
 
         function loadTable() {
             $('#myTable').DataTable({

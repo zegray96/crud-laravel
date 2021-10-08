@@ -12,7 +12,7 @@
         <div class="modal-body">
             <div class="form-group">
                 <label>Descripcion</label>
-                <input type="text" class="form-control" name="description">
+                <input type="text" class="form-control" name="description" value="{{ old('description') ? old('description') : (isset($article) ? $description->description : '') }}">
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
