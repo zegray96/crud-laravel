@@ -112,7 +112,7 @@ class ArticleController extends Controller
             DB::commit();
             return response()->json([
                 'title'=>'Guardado!',
-                'msg' => '¡El registro se actualizó correctamente',
+                'msg' => 'El registro se actualizó correctamente',
                 'icon' => 'success'
             ], 200);
         } catch (Exception $e) {
