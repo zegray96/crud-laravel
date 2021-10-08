@@ -12,14 +12,11 @@ function store(form, tableId) {
         $(".help-block").remove();
 
         let errors = err.response;
-        if (errors.status === 401)
-            $(location).prop('pathname', 'auth/login');
         if (errors.status === 422) {
             errors = errors.data;
             $.each(errors.errors, function (key, value) {
                 $('[name="' + key + '"]')
                     .closest('.form-group')
-                    .addClass('has-error')
                     .append('<span class="help-block text-danger">' + value + '</span>');
             });
         } else {
@@ -28,12 +25,13 @@ function store(form, tableId) {
     });
 }
 
-function showMsg(title, msg, icon, reload) {
+function showMsg(title, msg, icon) {
     Swal.fire({
         title: title,
         text: msg,
         icon: icon,
         showCancelButton: false,
+        allowOutsideClick: false
     })
 }
 
@@ -46,7 +44,8 @@ function confirmMsg(title, msg, icon) {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Confirmar',
-        cancelButtonText: 'Cancelar'
+        cancelButtonText: 'Cancelar',
+        allowOutsideClick: false
     }).then((result) => {
         if (result.value) {
             return true;
@@ -64,6 +63,10 @@ function destroy(href, tableId) {
                     .then(res => {
                         refreshDataTable(tableId);
                         showMsg(res.data.title, res.data.msg, res.data.icon, false);
+                    }).catch(err => {
+                        let errors = err.response;
+                        showMsg("Ups! Hubo un error imprevisto", `Contáctate con el administrador. Error ${errors.status}`, 'error', true)
+                        console.log(err);
                     });
             }
         })
@@ -79,7 +82,23 @@ function create(url) {
                 backdrop: 'static',
                 keyboard: false
             }, 'show');
-        }).catch(err => console.log)
+        }).catch(err => {
+            console.log(err);
+        });
+}
+
+function edit(url) {
+    axios.get(url)
+        .then(res => {
+            $('#modalFormContent').html(res.data);
+            // evitamos que al hacer click se cierre el modal
+            $('#modalForm').modal({
+                backdrop: 'static',
+                keyboard: false
+            }, 'show');
+        }).catch(err => {
+            console.log(err);
+        });
 }
 
 
@@ -91,5 +110,5 @@ function refreshDataTable(tableId) {
 
 
 
-export { store, destroy, create, showMsg, confirmMsg, refreshDataTable };
+export { store, create, edit, destroy, showMsg, confirmMsg, refreshDataTable };
 

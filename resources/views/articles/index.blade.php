@@ -16,7 +16,6 @@
         <div class="col-12">
             <a href="{{ route('articles.create') }}" class="btn btn-primary"
                 onclick="event.preventDefault(); create(this.href)"> Nuevo
-                <i class="fa fa-plus"></i>
             </a>
 
             {{-- Modal Form --}}

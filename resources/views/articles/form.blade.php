@@ -9,18 +9,18 @@
     <div class="modal-body">
         <div class="form-group">
             <label>Descripcion</label>
-            <input type="text" class="form-control" name="description" value="{{ old('description') ? old('description') : (isset($article) ? $description->description : '') }}">
+            <input type="text" class="form-control" name="description" value="{{ isset($article) ? $article->description : '' }}">
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label>Precio</label>
-                <input type="text" class="form-control" name="price">
+                <input type="text" class="form-control" name="price" value="{{ isset($article) ? $article->price : '' }}">
             </div>
             <div class="form-group col-md-6">
                 <label>Estado</label>
                 <select class="custom-select" name="status">
-                    <option value="ACTIVO">ACTIVO</option>
-                    <option value="INACTIVO">INACTIVO</option>
+                    <option value="ACTIVO" {{isset($article) ? ($article->status == 'ACTIVO' ? 'selected' : '' ) : ''}}>ACTIVO</option>
+                    <option value="INACTIVO" {{isset($article) ? ($article->status == 'INACTIVO' ? 'selected' : '' ) : ''}}>INACTIVO</option>
                 </select>
             </div>
         </div>

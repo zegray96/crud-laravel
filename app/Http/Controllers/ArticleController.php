@@ -80,9 +80,10 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit($id)
     {
-        //
+        $article=Article::find($id);
+        return view('articles.form', compact('article'));
     }
 
     /**
@@ -94,7 +95,29 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $validatedData = $request->validate([
+            'description' => 'required',
+            'price' => 'required|numeric',
+        ], [
+            'description.required' => 'Ingrese una descripcion',
+            'price.required' => 'Ingrese un precio',
+            'price.numeric' => 'Debe ser un numero',
+        ]);
+        try {
+            DB::beginTransaction();
+            $article->description= $request->description;
+            $article->price= $request->price;
+            $article->status= $request->status;
+            $article->save();
+            DB::commit();
+            return response()->json([
+                'title'=>'Guardado!',
+                'msg' => '¡El registro se actualizó correctamente',
+                'icon' => 'success'
+            ], 200);
+        } catch (Exception $e) {
+            DB::rolback();
+        }
     }
 
     /**
@@ -103,9 +126,9 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Article $article)
     {
-        $article = Article::find($id);
+        // $article = Article::find($id);
         $article->delete();
         return response()->json([
             'title'=>'¡Cambios guardados!',
