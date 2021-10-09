@@ -51,14 +51,14 @@ class ArticleController extends Controller
         ]);
         
         try {
-            $image=$request->file('image')->getClientOriginalName();
-            $request->file('image')->storeAs('articlesImages', $image);
+            $image=date('YmdHis').'_'.$request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('public/articlesImages', $image);
             DB::beginTransaction();
             Article::create([
                 'description'=>$request->description,
                 'price'=>$request->price,
                 'status'=>$request->status,
-                'image'=>$request->image,
+                'image'=>$image,
             ]);
             DB::commit();
             return response()->json([

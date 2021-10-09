@@ -84,6 +84,19 @@
                         "data": 'description'
                     },
                     {
+                        "data": "image",
+                        "render": function(data, type, row) {
+                            if (data!=null) {
+                                data = '<img src="storage/articlesImages/' + data + '" style="width:100px">';     
+                            }else{
+                                data = '<strong>SIN IMAGEN</strong>';
+                            }
+                            
+                            return data;
+                        },
+
+                    },
+                    {
                         "data": 'price'
                     },
                     {
