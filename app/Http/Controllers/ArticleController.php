@@ -41,24 +41,26 @@ class ArticleController extends Controller
         $validatedData = $request->validate([
             'description' => 'required',
             'price' => 'required|numeric',
-            'image' => 'required|image',
+            'image' => 'image',
         ], [
             'description.required' => 'Ingrese una descripcion',
             'price.required' => 'Ingrese un precio',
             'price.numeric' => 'Debe ser un numero',
-            'image.required' => 'Seleccione imagen',
             'image.image' => 'Debe ser una imagen'
         ]);
         
         try {
-            $image=date('YmdHis').'_'.$request->file('image')->getClientOriginalName();
-            $request->file('image')->storeAs('public/articlesImages', $image);
+            if ($request->hasFile('image')) {
+                $image=date('YmdHis').'_'.$request->file('image')->getClientOriginalName();
+                $request->file('image')->storeAs('public/articlesImages', $image);
+            }
+            
             DB::beginTransaction();
             Article::create([
                 'description'=>$request->description,
                 'price'=>$request->price,
                 'status'=>$request->status,
-                'image'=>$image,
+                'image'=>isset($image) ? $image : null,
             ]);
             DB::commit();
             return response()->json([
