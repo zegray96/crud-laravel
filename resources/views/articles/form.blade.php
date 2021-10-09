@@ -1,5 +1,5 @@
 <form action="{{ isset($article) ? route('articles.update', $article->id) : route('articles.store') }}"
-    method="{{ isset($article) ? 'PUT' : 'POST' }}" autocomplete="off" id="formArticle">
+    method="{{ isset($article) ? 'PUT' : 'POST' }}" autocomplete="off" id="formArticle" enctype="multipart/form-data">
     <div class="modal-header">
         <h5 class="modal-title">{{ isset($article) ? 'Editar Articulo' : 'Nuevo Articulo' }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -29,6 +29,14 @@
                 </select>
             </div>
         </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="image" class="form-label">Imagen</label>
+                <input class="form-control" type="file" id="image" name="image">
+            </div>
+        </div>
+
     </div>
 
     <div class="modal-footer">

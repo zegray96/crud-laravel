@@ -1,8 +1,30 @@
 function store(form, tableId) {
     // form = formulario que envia los datos
+
+    // usamos esta forma para evitar errores de carga de archivos
+    let formData = new FormData(form[0]);
+
+    // $.ajax({
+    //     type: form.attr('method'),
+    //     url: form.attr('action'),
+    //     data: data,
+    //     headers: {
+    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     },
+    //     contentType: false,
+    //     processData: false,
+    //     cache: false,
+    //     success: function (data) {
+    //         console.log(data);
+    //     },
+    //     error: function (error) {
+    //         console.log(error);
+    //     }
+    // })
+
     axios(form.attr('action'), {
         method: form.attr('method'),
-        data: form.serialize()
+        data: formData,
     }).then(res => {
         refreshDataTable(tableId);
         showMsg(res.data.title, res.data.msg, res.data.icon, true)

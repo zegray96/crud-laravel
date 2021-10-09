@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\UploadedFile;
 
 class ArticleController extends Controller
 {
@@ -40,17 +41,24 @@ class ArticleController extends Controller
         $validatedData = $request->validate([
             'description' => 'required',
             'price' => 'required|numeric',
+            'image' => 'required|image',
         ], [
             'description.required' => 'Ingrese una descripcion',
             'price.required' => 'Ingrese un precio',
             'price.numeric' => 'Debe ser un numero',
+            'image.required' => 'Seleccione imagen',
+            'image.image' => 'Debe ser una imagen'
         ]);
+        
         try {
+            $image=$request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('articlesImages', $image);
             DB::beginTransaction();
             Article::create([
                 'description'=>$request->description,
                 'price'=>$request->price,
                 'status'=>$request->status,
+                'image'=>$request->image,
             ]);
             DB::commit();
             return response()->json([

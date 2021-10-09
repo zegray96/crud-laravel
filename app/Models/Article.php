@@ -10,6 +10,6 @@ class Article extends Model
     use HasFactory;
 
     protected $fillable = [
-        'description', 'price', 'status'
+        'description', 'price', 'status', 'image'
     ];
 }
