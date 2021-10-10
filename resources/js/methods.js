@@ -26,6 +26,7 @@ function store(form, tableId) {
         method: form.attr('method'),
         data: formData,
     }).then(res => {
+        console.log(res);
         refreshDataTable(tableId);
         showMsg(res.data.title, res.data.msg, res.data.icon, true)
         $('#modalForm').modal('hide');

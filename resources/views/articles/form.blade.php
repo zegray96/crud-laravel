@@ -1,5 +1,11 @@
-<form action="{{ isset($article) ? route('articles.update', $article->id) : route('articles.store') }}"
-    method="{{ isset($article) ? 'PUT' : 'POST' }}" autocomplete="off" id="formArticle" enctype="multipart/form-data">
+<form action="{{ isset($article) ? route('articles.update', $article->id) : route('articles.store') }}" method="POST"
+    autocomplete="off" id="formArticle" enctype="multipart/form-data">
+
+    @if (isset($article))
+        {{-- Usamos este input hidden ya que formData usada para enviar los datos con axios no acepta el metodo PUT/PATCH --}}
+        @method('PUT')
+    @endif
+
     <div class="modal-header">
         <h5 class="modal-title">{{ isset($article) ? 'Editar Articulo' : 'Nuevo Articulo' }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -32,6 +38,14 @@
 
         <div class="form-row">
             <div class="form-group col-md-6">
+                <div class="d-flex justify-content-center">
+                    <img id="imagePreview" class="img-thumbnail" width="150px" height="150px"
+                        {{ isset($article->image) ? "src=storage/articlesImages/$article->image" : '' }}>
+                </div>
+
+            </div>
+
+            <div class="form-group col-md-6">
                 <label for="image" class="form-label">Imagen</label>
                 <input class="form-control" type="file" id="image" name="image">
             </div>
@@ -50,4 +64,18 @@
 <script>
     // Colocamos el inicializador de selectpicker aca ya que el formulario se dibuja cada vez que llamamos a los botones nuevo o editar
     $('.selectpicker').selectpicker();
+
+    // Image Preview
+    $('#image').on('change', function() {
+        loadImagePreview(this);
+    });
+
+    function loadImagePreview(input) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            // Asignamos el atributo src a la tag de imagen
+            $('#imagePreview').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
 </script>

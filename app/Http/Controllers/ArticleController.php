@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -114,6 +114,17 @@ class ArticleController extends Controller
             'price.numeric' => 'Debe ser un numero',
         ]);
         try {
+            if ($request->hasFile('image')) {
+                $image=date('YmdHis').'_'.$request->file('image')->getClientOriginalName();
+                if ($article->image!=null) {
+                    // Borramos la imagen anterior
+                    Storage::delete('public/articlesImages/'.$article->image);
+                }
+                // Guardamos la nueva imagen
+                $request->file('image')->storeAs('public/articlesImages', $image);
+                $article->image = $image;
+            }
+
             DB::beginTransaction();
             $article->description= $request->description;
             $article->price= $request->price;
@@ -138,7 +149,6 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        // $article = Article::find($id);
         $article->delete();
         return response()->json([
             'title'=>'¡Cambios guardados!',
