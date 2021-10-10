@@ -149,6 +149,10 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        if ($article->image!=null) {
+            // Borramos la imagen anterior
+            Storage::delete('public/articlesImages/'.$article->image);
+        }
         $article->delete();
         return response()->json([
             'title'=>'¡Cambios guardados!',
