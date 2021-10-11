@@ -54,10 +54,6 @@ class ArticleController extends Controller
             if ($request->hasFile('image')) {
                 // Definimos el nombre de la carpeta
                 $folder = storage_path(). '\app\public\articlesImages';
-                // Creamos la carpeta si no existe
-                if (!file_exists($folder)) {
-                    mkdir($folder, 0777, true);
-                }
                 // Definimos el nombre del archivo
                 $image=date('YmdHis').'_'.$request->file('image')->getClientOriginalName();
                 // Definimos donde se va guardar
@@ -133,10 +129,6 @@ class ArticleController extends Controller
                 }
                 // Definimos el nombre de la carpeta
                 $folder = storage_path(). '\app\public\articlesImages';
-                // Creamos la carpeta si no existe
-                if (!file_exists($folder)) {
-                    mkdir($folder, 0777, true);
-                }
                 // Definimos el nombre del archivo
                 $image=date('YmdHis').'_'.$request->file('image')->getClientOriginalName();
                 // Definimos donde se va guardar
