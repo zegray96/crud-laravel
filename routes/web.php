@@ -14,6 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes(['register'=>false]);
 
+Route::get('migrate', function () {
+    Artisan::call('migrate');
+    return "Las migraciones se ejecutaron con exito.";
+});
+
+Route::get('migrate-fresh', function () {
+    Artisan::call('migrate:fresh');
+    return "Las migraciones se volvieron a cargar con exito.";
+});
+
+Route::get('db-seed', function () {
+    Artisan::call('db:seed');
+    return "Los seeders se ejecutaron con exito.";
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
