@@ -20,12 +20,12 @@ class CreateUsers extends Seeder
             'name'=> 'gabriel',
             'email'=>'gabriel@mail.com',
             'password' => Hash::make("123")
-        ]);
+        ])->assignRole("Admin");
 
         User::create([
             'name'=> 'lucas',
             'email'=>'lucas@mail.com',
             'password' => Hash::make("123")
-        ]);
+        ])->assignRole("Auxiliar");
     }
 }
