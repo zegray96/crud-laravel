@@ -6,6 +6,7 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class ArticleController extends Controller
 {
@@ -51,8 +52,18 @@ class ArticleController extends Controller
         
         try {
             if ($request->hasFile('image')) {
+                // Definimos el nombre de la carpeta
+                $folder = storage_path(). '\app\public\articlesImages';
+                // Creamos la carpeta si no existe
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
+                // Definimos el nombre del archivo
                 $image=date('YmdHis').'_'.$request->file('image')->getClientOriginalName();
-                $request->file('image')->storeAs('public/articlesImages', $image);
+                // Definimos donde se va guardar
+                $path = $folder.'\\'.$image;
+                // Guardamos y redimensionamos
+                Image::make($request->file('image'))->resize(500, 500)->save($path);
             }
             
             DB::beginTransaction();
@@ -115,13 +126,24 @@ class ArticleController extends Controller
         ]);
         try {
             if ($request->hasFile('image')) {
-                $image=date('YmdHis').'_'.$request->file('image')->getClientOriginalName();
+                // Verificar si posee una imagen
                 if ($article->image!=null) {
                     // Borramos la imagen anterior
                     Storage::delete('public/articlesImages/'.$article->image);
                 }
-                // Guardamos la nueva imagen
-                $request->file('image')->storeAs('public/articlesImages', $image);
+                // Definimos el nombre de la carpeta
+                $folder = storage_path(). '\app\public\articlesImages';
+                // Creamos la carpeta si no existe
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
+                // Definimos el nombre del archivo
+                $image=date('YmdHis').'_'.$request->file('image')->getClientOriginalName();
+                // Definimos donde se va guardar
+                $path = $folder.'\\'.$image;
+                // Guardamos y redimensionamos
+                Image::make($request->file('image'))->resize(500, 500)->save($path);
+
                 $article->image = $image;
             }
 
