@@ -52,12 +52,16 @@ class ArticleController extends Controller
         
         try {
             if ($request->hasFile('image')) {
+                // Creamos la carpeta si no existe
+                if (!file_exists(storage_path(). '/app/public/articlesImages')) {
+                    mkdir(storage_path(). '/app/public/articlesImages', 0777, true);
+                }
                 // Definimos el nombre de la carpeta
-                $folder = storage_path(). '\app\public\articlesImages';
+                $folder = storage_path(). '/app/public/articlesImages/';
                 // Definimos el nombre del archivo
                 $image=date('YmdHis').'_'.$request->file('image')->getClientOriginalName();
                 // Definimos donde se va guardar
-                $path = $folder.'\\'.$image;
+                $path = $folder.$image;
                 // Guardamos y redimensionamos
                 Image::make($request->file('image'))->resize(500, 500)->save($path);
             }
@@ -127,12 +131,16 @@ class ArticleController extends Controller
                     // Borramos la imagen anterior
                     Storage::delete('public/articlesImages/'.$article->image);
                 }
+                // Creamos la carpeta si no existe
+                if (!file_exists(storage_path(). '/app/public/articlesImages')) {
+                    mkdir(storage_path(). '/app/public/articlesImages', 0777, true);
+                }
                 // Definimos el nombre de la carpeta
-                $folder = storage_path(). '\app\public\articlesImages';
+                $folder = storage_path(). '/app/public/articlesImages/';
                 // Definimos el nombre del archivo
                 $image=date('YmdHis').'_'.$request->file('image')->getClientOriginalName();
                 // Definimos donde se va guardar
-                $path = $folder.'\\'.$image;
+                $path = $folder.$image;
                 // Guardamos y redimensionamos
                 Image::make($request->file('image'))->resize(500, 500)->save($path);
 
