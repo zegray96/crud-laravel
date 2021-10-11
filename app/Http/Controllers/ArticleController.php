@@ -51,11 +51,6 @@ class ArticleController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'image' => 'image',
-        ], [
-            'description.required' => 'Ingrese una descripcion',
-            'price.required' => 'Ingrese un precio',
-            'price.numeric' => 'Debe ser un numero',
-            'image.image' => 'Debe ser una imagen'
         ]);
         
         try {
@@ -125,10 +120,7 @@ class ArticleController extends Controller
         $validatedData = $request->validate([
             'description' => 'required',
             'price' => 'required|numeric',
-        ], [
-            'description.required' => 'Ingrese una descripcion',
-            'price.required' => 'Ingrese un precio',
-            'price.numeric' => 'Debe ser un numero',
+            'image' => 'image',
         ]);
         try {
             if ($request->hasFile('image')) {
