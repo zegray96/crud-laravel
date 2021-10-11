@@ -86,6 +86,12 @@
                     {
                         "data": 'email'
                     },
+                    {
+                        "data": 'roles',
+                        "render": function(data, type, row) {
+                            return '<h5><span class="badge badge-success">' + data + '</span></h5>';
+                        },
+                    }
                 ],
                 "order": [
                     [1, "asc"]

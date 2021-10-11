@@ -53,12 +53,15 @@ class UserController extends Controller
             'role_id.required' => 'El campo rol es obligatorio'
         ]);
         try {
+            // Buscamos el rol
+            $rol=Role::find($request->role_id);
+
             DB::beginTransaction();
             User::create([
                 'name'=>$request->name,
                 'password'=>Hash::make($request->password),
                 'email'=>$request->email
-            ]);
+            ])->assignRole($rol);
             DB::commit();
             return response()->json([
                 'title'=>'¡Guardado!',
@@ -115,12 +118,17 @@ class UserController extends Controller
             'password.confirmed' => 'Las contraseñas no coinciden'
         ]);
         try {
+            // Buscamos el rol
+            $rol=Role::find($request->role_id);
+            
             if (isset($request->password)) {
                 $user->password = Hash::make($request->password);
             }
             DB::beginTransaction();
             $user->name= $request->name;
             $user->email= $request->email;
+            // Le asigno el rol
+            $user->roles()->sync($rol);
             $user->save();
             DB::commit();
             return response()->json([
@@ -154,7 +162,10 @@ class UserController extends Controller
         $users = User::get();
         return datatables()->of($users)
         ->addColumn('buttons', 'users.actionButtons')
-        ->rawColumns(['buttons'])
+        ->addColumn('roles', function ($users) {
+            return $users->roles->first()->name;
+        })
+        ->rawColumns(['buttons','roles'])
         ->toJson();
     }
 }

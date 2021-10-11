@@ -33,15 +33,16 @@
                 <input type="text" class="form-control" name="password_confirmation">
             </div>
         </div>
-
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label>Rol</label>
                 <select class="selectpicker form-control" name="role_id" data-live-search="true">
-                    @foreach ($roles as $role)
-                        <option value="{{ $role->id }}">
-                            {{ $role->name }}
-                        </option>
+                    @foreach ($roles as $rol)
+                        @if (isset($user) && $user->roles()->first()->id == $rol->id)
+                            <option value="{{ $rol->id }}" selected>{{ $rol->name }}</option>
+                        @else
+                            <option value="{{ $rol->id }}">{{ $rol->name }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
