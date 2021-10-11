@@ -42,7 +42,8 @@
         // Al cerrar modal
         $('#modalForm').on('hidden.bs.modal', function() {
             // eliminamos los msj de errores
-            $(".help-block").remove();
+            $(".invalid-feedback").remove();
+            $(".is-invalid").removeClass("is-invalid")
         });
 
         function loadTable() {
@@ -86,12 +87,13 @@
                     {
                         "data": "image",
                         "render": function(data, type, row) {
-                            if (data!=null) {
-                                data = '<img src="storage/articlesImages/' + data + '" style="width:100px">';     
-                            }else{
+                            if (data != null) {
+                                data = '<img src="storage/articlesImages/' + data +
+                                '" style="width:100px">';
+                            } else {
                                 data = '<strong>SIN IMAGEN</strong>';
                             }
-                            
+
                             return data;
                         },
 

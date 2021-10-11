@@ -26,21 +26,22 @@ function store(form, tableId) {
         method: form.attr('method'),
         data: formData,
     }).then(res => {
-        console.log(res);
         refreshDataTable(tableId);
         showMsg(res.data.title, res.data.msg, res.data.icon, true)
         $('#modalForm').modal('hide');
     }).catch(err => {
         // eliminamos los msj de errores
-        $(".help-block").remove();
+        $(".invalid-feedback").remove();
+        $(".is-invalid").removeClass("is-invalid")
 
         let errors = err.response;
         if (errors.status === 422) {
             errors = errors.data;
             $.each(errors.errors, function (key, value) {
                 $('[name="' + key + '"]')
+                    .addClass('is-invalid')
                     .closest('.form-group')
-                    .append('<span class="help-block text-danger">' + value + '</span>');
+                    .append('<span class="invalid-feedback" role="alert"><strong>' + value + '</strong></span>');
             });
         } else {
             showMsg("Ups! Hubo un error imprevisto", `Contáctate con el administrador. Error ${errors.status}`, 'error', true)

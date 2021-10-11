@@ -12,6 +12,11 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    @endif
     <div class="modal-body">
         <div class="form-group">
             <label>Descripcion</label>
