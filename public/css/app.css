@@ -10036,6 +10036,13 @@ h3 {
   border-radius: 0.25rem;
 }
 
+.bootstrap-select.is-invalid .dropdown-toggle,
+.error .bootstrap-select .dropdown-toggle,
+.has-error .bootstrap-select .dropdown-toggle,
+.was-validated .bootstrap-select .selectpicker:invalid + .dropdown-toggle {
+  border-color: #e3342f !important;
+}
+
 body {
   font-family: "Roboto", sans-serif;
 }

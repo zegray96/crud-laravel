@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -26,7 +27,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.form');
+        $roles=Role::get();
+        return view('users.form', compact('roles'));
     }
 
     /**
@@ -40,13 +42,15 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed',
+            'role_id' => 'required'
         ], [
             'name.required' => 'El campo nombre es obligatorio',
             'email.required' => 'El campo email es obligatorio',
             'email.unique'  => 'Este email, ya está asociado a un usuario',
             'password.required' => 'El campo password es obligatorio',
-            'password.confirmed' => 'Las contraseñas no coinciden'
+            'password.confirmed' => 'Las contraseñas no coinciden',
+            'role_id.required' => 'El campo rol es obligatorio'
         ]);
         try {
             DB::beginTransaction();
@@ -85,7 +89,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user=User::find($id);
+        $roles=Role::get();
+        return view('users.form', compact('user', 'roles'));
     }
 
     /**
@@ -97,7 +103,34 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:users,email,'.$user->id,
+            'password' => 'confirmed'
+        ], [
+            'name.required' => 'El campo nombre es obligatorio',
+            'email.required' => 'El campo email es obligatorio',
+            'email.unique'  => 'Este email, ya está asociado a un usuario',
+            'password.confirmed' => 'Las contraseñas no coinciden'
+        ]);
+        try {
+            if (isset($request->password)) {
+                $user->password = Hash::make($request->password);
+            }
+            DB::beginTransaction();
+            $user->name= $request->name;
+            $user->email= $request->email;
+            $user->save();
+            DB::commit();
+            return response()->json([
+                'title'=>'¡Guardado!',
+                'msg' => 'El registro se actualizó correctamente',
+                'icon' => 'success'
+            ], 200);
+        } catch (Exception $e) {
+            DB::rolback();
+        }
     }
 
     /**
@@ -106,9 +139,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return response()->json([
+            'title'=>'¡Cambios guardados!',
+            'msg'=>'El registro se eliminó correctamente',
+            'icon'=>'info'
+        ]);
     }
 
     public function list()

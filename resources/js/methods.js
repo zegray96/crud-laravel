@@ -38,10 +38,18 @@ function store(form, tableId) {
         if (errors.status === 422) {
             errors = errors.data;
             $.each(errors.errors, function (key, value) {
-                $('[name="' + key + '"]')
-                    .addClass('is-invalid')
-                    .closest('.form-group')
-                    .append('<span class="invalid-feedback" role="alert"><strong>' + value + '</strong></span>');
+                // Comprobamos si mi elemento es un select para darle otro estilo
+                if ($('[name="' + key + '"]').is('select')) {
+                    $('[name="' + key + '"]')
+                        .closest('.form-group')
+                        .addClass('has-error')
+                        .append('<span class="invalid-feedback d-block" role="alert"><strong>' + value + '</strong></span>');
+                } else {
+                    $('[name="' + key + '"]')
+                        .addClass('is-invalid')
+                        .closest('.form-group')
+                        .append('<span class="invalid-feedback" role="alert"><strong>' + value + '</strong></span>');
+                }
             });
         } else {
             showMsg("Ups! Hubo un error imprevisto", `Contáctate con el administrador. Error ${errors.status}`, 'error', true)

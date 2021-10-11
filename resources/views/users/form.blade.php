@@ -16,13 +16,11 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label>Nombre</label>
-                <input type="text" class="form-control" name="name"
-                    value="{{ isset($user) ? $user->name : '' }}">
+                <input type="text" class="form-control" name="name" value="{{ isset($user) ? $user->name : '' }}">
             </div>
             <div class="form-group col-md-6">
                 <label>Email</label>
-                <input type="text" class="form-control" name="email"
-                    value="{{ isset($user) ? $user->email : '' }}">
+                <input type="text" class="form-control" name="email" value="{{ isset($user) ? $user->email : '' }}">
             </div>
         </div>
         <div class="form-row">
@@ -34,6 +32,20 @@
                 <label>Repita Contraseña</label>
                 <input type="text" class="form-control" name="password_confirmation">
             </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Rol</label>
+                <select class="selectpicker form-control" name="role_id" data-live-search="true">
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->id }}">
+                            {{ $role->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
         </div>
 
     </div>
@@ -49,5 +61,4 @@
 <script>
     // Colocamos el inicializador de selectpicker aca ya que el formulario se dibuja cada vez que llamamos a los botones nuevo o editar
     $('.selectpicker').selectpicker();
-
 </script>

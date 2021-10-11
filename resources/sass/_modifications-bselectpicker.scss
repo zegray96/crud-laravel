@@ -1,4 +1,11 @@
-.dropdown-toggle{
+.dropdown-toggle {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
+}
+
+.bootstrap-select.is-invalid .dropdown-toggle,
+.error .bootstrap-select .dropdown-toggle,
+.has-error .bootstrap-select .dropdown-toggle,
+.was-validated .bootstrap-select .selectpicker:invalid + .dropdown-toggle {
+    border-color: #e3342f !important;
 }
