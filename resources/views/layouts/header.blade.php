@@ -5,7 +5,8 @@
         </div>
 
         <div class="userData">
-            <h4 class="text-white">Hola! {{auth()->user()->name}}</h4>
+            <h4 class="text-white">Bienvenido! {{auth()->user()->name}}</h4>
+            <h5 class="text-white">Tu rol es: {{auth()->user()->roles()->first()->name}}</h5>
             <form id="logoutForm" action="{{route('logout')}}" method="POST">
             @csrf
             </form>

@@ -14,9 +14,12 @@
 
     <div class="row mb-4">
         <div class="col-12">
-            <a href="{{ route('articles.create') }}" class="btn btn-primary"
-                onclick="event.preventDefault(); create(this.href)"> Nuevo
-            </a>
+            @can('articles.create')
+                <a href="{{ route('articles.create') }}" class="btn btn-primary"
+                    onclick="event.preventDefault(); create(this.href)"> Nuevo
+                </a>
+            @endcan
+
 
             {{-- Modal Form --}}
             @include('layouts.modalForm')
@@ -89,7 +92,7 @@
                         "render": function(data, type, row) {
                             if (data != null) {
                                 data = '<img src="storage/articlesImages/' + data +
-                                '" style="width:100px">';
+                                    '" style="width:100px">';
                             } else {
                                 data = '<strong>SIN IMAGEN</strong>';
                             }

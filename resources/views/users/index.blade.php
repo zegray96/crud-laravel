@@ -14,9 +14,12 @@
 
     <div class="row mb-4">
         <div class="col-12">
-            <a href="{{ route('users.create') }}" class="btn btn-primary"
-                onclick="event.preventDefault(); create(this.href)"> Nuevo
-            </a>
+            @can('users.create')
+                <a href="{{ route('users.create') }}" class="btn btn-primary"
+                    onclick="event.preventDefault(); create(this.href)"> Nuevo
+                </a>
+            @endcan
+
 
             {{-- Modal Form --}}
             @include('layouts.modalForm')
