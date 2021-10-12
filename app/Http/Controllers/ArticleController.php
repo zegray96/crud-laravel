@@ -16,6 +16,12 @@ class ArticleController extends Controller
     {
         // Definimos el nombre de la carpeta donde almacenar las imagnes
         $this->artImgfolder = storage_path(). '/app/public/articlesImages';
+
+        // Solo podran acceder al metodo index y list los que tengan el permiso users.list
+        $this->middleware('can:articles.list')->only('index', 'list');
+        $this->middleware('can:articles.create')->only('create', 'store');
+        $this->middleware('can:articles.edit')->only('edit', 'update');
+        $this->middleware('can:articles.delete')->only('destroy');
     }
     
     /**

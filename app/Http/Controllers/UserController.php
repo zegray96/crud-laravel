@@ -10,6 +10,14 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        // Solo podran acceder al metodo index y list los que tengan el permiso users.list
+        $this->middleware('can:users.list')->only('index', 'list');
+        $this->middleware('can:users.create')->only('create', 'store');
+        $this->middleware('can:users.edit')->only('edit', 'update');
+        $this->middleware('can:users.delete')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
