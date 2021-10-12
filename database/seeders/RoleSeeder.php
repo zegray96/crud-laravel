@@ -18,14 +18,14 @@ class RoleSeeder extends Seeder
         $admin = Role::create(['name' => 'Admin']);
         $auxiliar = Role::create(['name' => 'Auxiliar']);
         // Articles
-        $permission = Permission::create(['name' => 'articles.list'])->syncRoles([$admin, $auxiliar]);
-        $permission = Permission::create(['name' => 'articles.create'])->syncRoles([$admin, $auxiliar]);
-        $permission = Permission::create(['name' => 'articles.edit'])->syncRoles([$admin, $auxiliar]);
-        $permission = Permission::create(['name' => 'articles.delete'])->syncRoles([$admin, $auxiliar]);
+        $permission = Permission::create(['name' => 'articles.list', 'description' => 'Ver listado de articulos'])->syncRoles([$admin, $auxiliar]);
+        $permission = Permission::create(['name' => 'articles.create', 'description' => 'Crear articulos'])->syncRoles([$admin, $auxiliar]);
+        $permission = Permission::create(['name' => 'articles.edit', 'description' => 'Editar articulos'])->syncRoles([$admin, $auxiliar]);
+        $permission = Permission::create(['name' => 'articles.delete', 'description' => 'Eliminar articulos'])->syncRoles([$admin, $auxiliar]);
         // Users
-        $permission = Permission::create(['name' => 'users.list'])->syncRoles([$admin]);
-        $permission = Permission::create(['name' => 'users.create'])->syncRoles([$admin]);
-        $permission = Permission::create(['name' => 'users.edit'])->syncRoles([$admin]);
-        $permission = Permission::create(['name' => 'users.delete'])->syncRoles([$admin]);
+        $permission = Permission::create(['name' => 'users.list', 'description' => 'Ver listado de usuarios'])->syncRoles([$admin]);
+        $permission = Permission::create(['name' => 'users.create', 'description' => 'Crear usuarios'])->syncRoles([$admin]);
+        $permission = Permission::create(['name' => 'users.edit', 'description' => 'Editar usuarios'])->syncRoles([$admin]);
+        $permission = Permission::create(['name' => 'users.delete', 'description' => 'Eliminar usuarios'])->syncRoles([$admin]);
     }
 }

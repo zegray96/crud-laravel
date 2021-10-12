@@ -1,5 +1,5 @@
 <form action="{{ isset($user) ? route('users.update', $user->id) : route('users.store') }}" method="POST"
-    autocomplete="off" id="formUser" enctype="multipart/form-data">
+    autocomplete="off" id="formUser">
 
     @if (isset($user))
         {{-- Usamos este input hidden ya que formData usada para enviar los datos con axios no acepta el metodo PUT/PATCH --}}

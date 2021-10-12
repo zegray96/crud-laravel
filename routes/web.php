@@ -36,10 +36,12 @@ Route::middleware('auth')->group(function () {
         return view('layouts.dashboard');
     })->name('dashboard');
     
-    
     Route::resource('/articles', 'ArticleController')->except('show');
     Route::get('/articles-list', 'ArticleController@list')->name('articles.list');
     
     Route::resource('/users', 'UserController')->except('show');
     Route::get('/users-list', 'UserController@list')->name('users.list');
+    
+    Route::resource('/roles', 'RoleController')->except('show');
+    Route::get('/roles-list', 'RoleController@list')->name('roles.list');
 });
