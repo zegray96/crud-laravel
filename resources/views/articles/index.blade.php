@@ -2,7 +2,7 @@
 
 @section('more-links')
     {{-- Datatables --}}
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/dataTables.bootstrap4.min.css') }}">
 @endsection
 
 @section('content')
@@ -33,8 +33,16 @@
 @section('more-scripts')
 
     {{-- Datatables --}}
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('js/datatables/buttons.print.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/datatables/dataTables.buttons.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/datatables/jszip.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/datatables/pdfmake.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/datatables/vfs_fonts.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/datatables/buttons.html5.min.js') }}"></script>
+
 
     {{-- Script View --}}
     <script>
@@ -80,6 +88,45 @@
                     "emptyTable": "Ningún dato disponible en esta tabla",
                 },
                 "scrollX": true,
+                dom: 'Bflrtip', //definimos los elementos del control de la tabla
+                buttons: [{
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: [1, 3, 4]
+                        },
+                        text: '<i class="fas fa-file-excel"></i>',
+                        className: 'btn btn-success',
+                        titleAttr: 'Exportar a Excel',
+
+                    },
+
+
+                    {
+                        extend: 'csvHtml5',
+                        exportOptions: {
+                            columns: [1, 3, 4]
+                        },
+                        text: '<i class="fa fa-file-csv"></i>',
+                        className: 'btn btn-warning',
+                        titleAttr: 'Exportar a CSV',
+
+                    },
+
+
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns: [1, 3, 4]
+                        },
+                        text: '<i class="fa fa-print"></i>',
+                        className: 'btn btn-info',
+                        titleAttr: 'Imprimir',
+
+                    },
+
+
+
+                ],
                 "ajax": "{{ route('articles.list') }}",
                 "columns": [{
                         "data": 'buttons'
